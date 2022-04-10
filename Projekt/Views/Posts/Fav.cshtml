@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Projekt.Models.Fav>
+
+@{
+    ViewBag.Title = "Fav";
+}
+
+<h2>Fav</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Favorite post
+        </th>
+        <th>
+            Pphoto
+        </th>
+        <th>
+            Delete
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Post.Title
+            </td>
+            <th>
+                <img src="~/Photo/@item.Photo" alt="" height="100px" width="100px">
+            </th>
+            <td>
+                @Html.ActionLink("Delete", "DeleteFavorite", "Posts", new { id = item.ID }, null)
+            </td>
+        </tr>
+    }
+</table>

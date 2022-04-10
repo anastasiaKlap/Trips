@@ -1,0 +1,69 @@
+﻿@model PagedList.IPagedList<Projekt.Models.Post>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Wszystkie posty</h2>
+<br />
+<br />
+@using (Html.BeginForm("Index", "Posts", FormMethod.Get))
+{
+    <p>
+         @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control", @placeholder = "Wpisz..." })
+        <input type="submit" value="Szukaj" class="btn btn-primary"/>
+    </p>
+}
+@*<table class="table">
+    <tr>*@
+        <button class="btn btn-light">
+            @Html.ActionLink("Title", "Index", new { sortPosts = ViewBag.TitleSortParm, currentFilter = ViewBag.CurrentFilter })
+        </button>
+        @*<th>
+            Text
+        </th>
+        <th></th>
+
+    </tr>*@
+<div class="row" mt-5 md-2>
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-4">
+            <h3>
+                @Html.DisplayFor(modelItem => item.Title)
+            </h3>
+            <h4>
+                @Html.DisplayFor(modelItem => item.Text)
+            </h4>
+
+                @if (User.Identity.Name == item.Profil.Login)
+                {
+                    <p>
+
+                        @Html.ActionLink("Edytuj", "Edit", new { id = item.ID }, new { @class = "btn btn-info" })
+                        @Html.ActionLink("Usun", "Delete", new { id = item.ID }, new { @class = "btn btn-danger" })
+
+                    </p>
+                }
+                @*@Html.ActionLink("Like", "Add", new { id = item.ID })*@
+                @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-primary" })
+                </div>
+
+                }
+    </div>
+                <br />
+                <br />
+                @if (Request.IsAuthenticated)
+                {
+                    <p>
+                        @Html.ActionLink("Utworz nowy", "Create", new { area = "" }, new { @class = "btn btn-success" })
+                    </p>
+                }
+
+                <br />
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+                @Html.PagedListPager(Model, page => Url.Action("Index",
+                    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+

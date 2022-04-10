@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Projekt.Models.Trip>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Wszystkie wycieczki</h2>
+
+<br />
+<br />
+<br />
+@*<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FailName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.From)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.To)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumberOfPlaces)
+        </th>
+        <th></th>
+    </tr>*@
+<div class="row" mt-5 md-2>
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-4">
+            <img src="~/Photo/@item.Photo" alt="" height="100px" width="100px"> 
+            <h2>
+                @Html.DisplayFor(modelItem => item.Name)
+            </h2>
+            <p>
+                Od: @Html.DisplayFor(modelItem => item.From)
+            </p>
+            <p>
+                Do: @Html.DisplayFor(modelItem => item.From)
+            </p>
+            <p>
+                Liczba miejsc: @Html.DisplayFor(modelItem => item.NumberOfPlaces)
+            </p>
+            <p>
+
+                @if (Request.IsAuthenticated)
+                {
+
+                    @Html.ActionLink("Edytuj", "Edit", new { id = item.ID }, new { @class = "btn btn-info" })
+                    @Html.ActionLink("Usun", "Delete", new { id = item.ID }, new { @class = "btn btn-danger" })
+                }
+                @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-primary" })
+            </p>
+        </div>
+    }
+
+</div>
+@if (Request.IsAuthenticated)
+{
+    <p>
+        @Html.ActionLink("Utworz", "Create", new { area = "" }, new { @class = "btn btn-success" })
+    </p>
+}

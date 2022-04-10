@@ -1,0 +1,62 @@
+﻿@model Projekt.Models.Trip
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Informacja</h2>
+
+<div>
+    <hr />
+    <div class="row">
+
+
+        <h3>
+            @Html.DisplayFor(model => model.Name)
+        </h3>
+        <p>
+            Od: @Html.DisplayFor(model => model.From)
+        </p>
+
+
+        <p>
+            Do: @Html.DisplayFor(model => model.To)
+        </p>
+
+        <p>
+            Liczba miejsc: @Html.DisplayFor(model => model.NumberOfPlaces)
+        </p>
+        <p>
+            Liczba wolnych miejsc: @Html.DisplayFor(model => model.Number)
+        </p>
+    </div>
+   
+        <img src="~/Photo/@Model.Photo" alt="" height="300px" width="300px">
+        <br />
+        <br />
+        <br />
+     @if (Request.IsAuthenticated)
+    {
+        if (Model.Number > 0 && Model.IsReserved == false)
+        {
+            @Html.ActionLink("Zarezerwuj", "Reserved", new { id = Model.ID }, new { @class = "btn btn-success" })
+        }
+        else if (Model.IsReserved == true)
+        {
+            <p>Juz zerejestrowales/las sie</p>
+        }
+        else
+        {
+            <p>Przepraszam, wiecej nie ma miejsc.</p>
+        }
+    }
+</div>
+
+<br />
+<br />
+<br />
+<br />
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-info" }) |
+    @Html.ActionLink("Back to List", "Index", new { area = "" }, new { @class = "btn btn-primary" })
+</p>

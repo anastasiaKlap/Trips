@@ -1,0 +1,62 @@
+﻿@model Projekt.Models.Post
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Post</h2>
+
+<div>
+    <hr />
+    <div class="row">
+
+        <h3> 
+            @Html.DisplayFor(model => model.Title)
+        </h3>
+
+        <h4>
+            @Html.DisplayFor(model => model.Text)
+        </h4>
+
+    <br />
+    <hr />
+
+    <div>
+        <h5>Komentarze</h5>
+        @foreach (var item in Model.Comments)
+        {
+            <div>
+                @Html.DisplayFor(modelItem => item.Text)
+            </div>
+            <br /> 
+            if (User.Identity.Name == item.Profil.Login)
+            {
+                @Html.ActionLink("Usun", "Delete", "Comments", new { id = item.ID }, new { @class = "btn btn-danger btn-sm" })
+                @Html.ActionLink("Edytuj", "Edit", "Comments", new { id = item.ID }, new { @class = "btn btn-info btn-sm" })
+                <br />
+            }
+                <hr />
+            }
+        </div>
+
+    @using (Html.BeginForm("Create", "Comments"))
+    {
+
+
+        @Html.Hidden("PostID", Model.ID);
+
+
+    }
+    @if (Request.IsAuthenticated)
+    {
+        @Html.ActionLink("Dodaj Komentarz", "Create", "Comments", new { area = "" }, new { @class = "btn btn-success btn-sm" })
+    }
+</div>
+<br />
+<br />
+<br />
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-info" }) |
+    @Html.ActionLink("Back to List", "Index", new { area = "" }, new { @class = "btn btn-primary" })
+</p>
+</div>

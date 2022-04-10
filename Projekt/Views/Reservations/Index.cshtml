@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Projekt.Models.Reservation>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Rezerwacje</h2>
+
+
+<div class="row" mt-5 md-2>
+    @foreach (var item in Model)
+    {
+       @* if (User.Identity.Name == item.Profil.Email)
+        {*@
+            <div class="col-lg-4">
+                <img src="~/Photo/@item.Trip.Photo" alt="" height="100px" width="100px"> 
+                <h2>
+                    @item.Trip.Name
+                </h2>
+                <p>
+                    Od: @item.Trip.From
+                </p>
+                <p>
+                    Do: @item.Trip.To
+                </p>
+                <p>
+
+                    @Html.ActionLink("Usun", "DeleteReservation", "Trips", new { id = item.ID, Tripid = item.Trip.ID }, new { @class = "btn btn-danger" })
+
+                </p>
+            </div> 
+    }
+    </div>

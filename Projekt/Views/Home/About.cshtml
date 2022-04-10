@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Projekt.ViewModels.EnrollmentDateGroup>
+
+@{
+    ViewBag.Title = "About";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+@{
+    ViewBag.Title = "Title Statistics";
+}
+
+<h2>Title Statistics</h2>
+
+<table>
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Title Count
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @item.TitleCount
+            </td>
+        </tr>
+    }
+</table>
